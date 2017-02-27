@@ -78,18 +78,6 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             return this;
         }
 
-        public DynamicControlsPage GoToDynamicControls()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("dynamic_controls")).Click();
-            return new DynamicControlsPage(this.DriverContext);
-        }
-
-        public DynamicLoadingPage GoToDynamicLoading()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("dynamic_loading")).Click();
-            return new DynamicLoadingPage(this.DriverContext);
-        }
-
         public SlowResourcesPage GoToSlowResources()
         {
             this.Driver.GetElement(this.linkLocator.Format("slow")).Click();
@@ -100,11 +88,6 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
         {
             this.Driver.GetElement(this.linkLocator.Format("javascript_alerts")).Click();
             return new JavaScriptAlertsPage(this.DriverContext);
-        }
-
-        public void GoToPage(string page)
-        {
-            this.Driver.GetElement(this.linkLocator.Format(page)).Click();
         }
 
         public DownloadPage GoToFileDownloader()
@@ -137,12 +120,6 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             return new NestedFramesPage(this.DriverContext);
         }
 
-        public CheckboxesPage GoToCheckboxesPage()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("checkboxes")).Click();
-            return new CheckboxesPage(this.DriverContext);
-        }
-
         public ContextMenuPage GoToContextMenuPage()
         {
             this.Driver.GetElement(this.linkLocator.Format("context_menu")).Click();
@@ -173,22 +150,10 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             return new HoversPage(this.DriverContext);
         }
 
-        public StatusCodesPage GoToStatusCodesPage()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("status_codes")).Click();
-            return new StatusCodesPage(this.DriverContext);
-        }
-
         public ForgotPasswordPage GoToForgotPasswordPage()
         {
             this.Driver.GetElement(this.linkLocator.Format("forgot_password")).Click();
             return new ForgotPasswordPage(this.DriverContext);
-        }
-
-        public FloatingMenuPage GoToFloatingMenu()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("floating_menu")).Click();
-            return new FloatingMenuPage(this.DriverContext);
         }
 
         public void ChangeBasicAuthLink(string newAttributeValue)
