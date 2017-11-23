@@ -34,9 +34,12 @@ namespace TestFramework.ProjectExample.NUnit.Tests
         [Test]
         public void SaveFullScreenShotTest()
         {
-            var downloadPage = new InternetPage(this.DriverContext).OpenHomePage().GoToFileDownloader();
+            InternetPage internetPage = new InternetPage(this.DriverContext);
+            internetPage.OpenHomePage();
+            internetPage.GoToFileDownloader();
             var screenShotNumber = FilesHelper.CountFiles(this.DriverContext.ScreenShotFolder, FileType.Png);
             TakeScreenShot.Save(TakeScreenShot.DoIt(), ImageFormat.Png, this.DriverContext.ScreenShotFolder, this.DriverContext.TestTitle);
+            DownloadPage downloadPage = new DownloadPage(this.DriverContext);
             var nameOfScreenShot = downloadPage.CheckIfScreenShotIsSaved(screenShotNumber);
             Assert.IsTrue(nameOfScreenShot.Contains(this.DriverContext.TestTitle), "Name of screenshot doesn't contain Test Title");
         }
@@ -44,8 +47,11 @@ namespace TestFramework.ProjectExample.NUnit.Tests
         [Test]
         public void SaveWebDriverScreenShotTest()
         {
-            var downloadPage = new InternetPage(this.DriverContext).OpenHomePage().GoToFileDownloader();
+            InternetPage internetPage = new InternetPage(this.DriverContext);
+            internetPage.OpenHomePage();
+            internetPage.GoToFileDownloader();
             var screenShotNumber = FilesHelper.CountFiles(this.DriverContext.ScreenShotFolder, FileType.Png);
+            DownloadPage downloadPage = new DownloadPage(this.DriverContext);
             downloadPage.SaveWebDriverScreenShot();
             var nameOfScreenShot = downloadPage.CheckIfScreenShotIsSaved(screenShotNumber);
             Assert.IsTrue(nameOfScreenShot.Contains(this.DriverContext.TestTitle), "Name of screenshot doesn't contain Test Title");

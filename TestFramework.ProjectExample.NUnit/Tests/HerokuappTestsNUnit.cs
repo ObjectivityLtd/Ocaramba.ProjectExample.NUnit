@@ -52,8 +52,9 @@ namespace TestFramework.ProjectExample.NUnit.Tests
         [TestCaseSource(typeof(TestData), "Credentials")]
         public void FormAuthenticationPageTest(IDictionary<string, string> parameters)
         {
-            new InternetPage(this.DriverContext).OpenHomePage().GoToFormAuthenticationPage();
-
+            InternetPage internetPage = new InternetPage(this.DriverContext);
+            internetPage.OpenHomePage();
+            internetPage.GoToFormAuthenticationPage();
             var formFormAuthentication = new FormAuthenticationPage(this.DriverContext);
             formFormAuthentication.EnterUserName(parameters["user"]);
             formFormAuthentication.EnterPassword(parameters["password"]);
@@ -63,25 +64,15 @@ namespace TestFramework.ProjectExample.NUnit.Tests
                 () => Assert.AreEqual(parameters["message"], formFormAuthentication.GetMessage));
         }
 
-        [Test]
-        public void ForgotPasswordTest()
-        {
-            new InternetPage(this.DriverContext).OpenHomePage().GoToForgotPasswordPage();
-
-            var forgotPassword = new ForgotPasswordPage(this.DriverContext);
-
-            Verify.That(
-                this.DriverContext,
-                () => Assert.AreEqual(5 + 7 + 2, forgotPassword.EnterEmail(5, 7, 2)),
-                () => Assert.AreEqual("Your e-mail's been sent!", forgotPassword.ClickRetrievePassword));
-        }
 
         [Test]
         [Category("PhantomJs")]
         [TestCaseSource(typeof(TestData), "LinksSetTestName")]
         public void CountLinksAndSetTestNameAtShiftingContentTest(IDictionary<string, string> parameters)
         {
-            new InternetPage(this.DriverContext).OpenHomePage().GoToShiftingContentPage();
+            InternetPage internetPage = new InternetPage(this.DriverContext);
+            internetPage.OpenHomePage();
+            internetPage.GoToShiftingContentPage();
 
             var links = new ShiftingContentPage(this.DriverContext);
             Verify.That(this.DriverContext, () => Assert.AreEqual(parameters["number"], links.CountLinks()));
@@ -91,7 +82,9 @@ namespace TestFramework.ProjectExample.NUnit.Tests
         [TestCaseSource(typeof(TestData), "Links")]
         public void CountLinksAtShiftingContentTest(IDictionary<string, string> parameters)
         {
-            new InternetPage(this.DriverContext).OpenHomePage().GoToShiftingContentPage();
+            InternetPage internetPage = new InternetPage(this.DriverContext);
+            internetPage.OpenHomePage();
+            internetPage.GoToShiftingContentPage();
 
             var links = new ShiftingContentPage(this.DriverContext);
             Verify.That(this.DriverContext, () => Assert.AreEqual(parameters["number"], links.CountLinks()));
@@ -103,112 +96,14 @@ namespace TestFramework.ProjectExample.NUnit.Tests
         {
             const string PageTitle = "New Window";
 
-            var newWindowPage = new InternetPage(this.DriverContext)
-                .OpenHomePage()
-                .GoToMultipleWindowsPage()
-                .OpenNewWindowPage();
-
+            InternetPage internetPage = new InternetPage(this.DriverContext);
+            internetPage.OpenHomePage();
+            internetPage.GoToMultipleWindowsPage();
+            MultipleWindowsPage multipleWindowsPage = new MultipleWindowsPage(this.DriverContext);
+            multipleWindowsPage.OpenNewWindowPage();
+            NewWindowPage newWindowPage = new NewWindowPage(this.DriverContext);
             Assert.True(newWindowPage.IsPageTile(PageTitle), "wrong page title, should be {0}", PageTitle);
             Assert.True(newWindowPage.IsNewWindowH3TextVisible(PageTitle), "text is not equal to {0}", PageTitle);
-        }
-
-        [Test]
-        public void NestedFramesTest()
-        {
-            var nestedFramesPage = new InternetPage(this.DriverContext)
-                .OpenHomePage()
-                .GoToNestedFramesPage()
-                .SwitchToFrame("frame-top");
-
-            nestedFramesPage.SwitchToFrame("frame-left");
-            Assert.AreEqual("LEFT", nestedFramesPage.LeftBody);
-
-            nestedFramesPage.SwitchToParentFrame().SwitchToFrame("frame-middle");
-            Assert.AreEqual("MIDDLE", nestedFramesPage.MiddleBody);
-
-            nestedFramesPage.SwitchToParentFrame().SwitchToFrame("frame-right");
-            Assert.AreEqual("RIGHT", nestedFramesPage.RightBody);
-
-            nestedFramesPage.ReturnToDefaultContent().SwitchToFrame("frame-bottom");
-            Assert.AreEqual("BOTTOM", nestedFramesPage.BottomBody);
-        }
-
-        [Test]
-        [Category("PhantomJs")]
-        public void ContextMenuTest()
-        {
-            const string H3Value = "Context Menu";
-            var browser = BaseConfiguration.TestBrowser;
-            if (browser.Equals(BrowserType.Firefox))
-            {
-                var contextMenuPage = new InternetPage(this.DriverContext)
-                    .OpenHomePage()
-                    .GoToContextMenuPage()
-                    .SelectTheInternetOptionFromContextMenu();
-
-                Assert.AreEqual("You selected a context menu", contextMenuPage.JavaScriptText);
-                Assert.True(contextMenuPage.ConfirmJavaScript().IsH3ElementEqualsToExpected(H3Value), "h3 element is not equal to expected {0}", H3Value);
-            }
-        }
-
-        [Test]
-        public void HoversTest()
-        {
-            var expected = new[] { "name: user1", "name: user2", "name: user3" };
-
-            var homePage = new InternetPage(this.DriverContext)
-                .OpenHomePageWithUserCredentials()
-                .GoToHoversPage();
-
-            var text1Before = homePage.GetHoverText(1);
-            this.LogTest.Info("Text before: '{0}'", text1Before);
-            homePage.MouseHoverAt(1);
-            var text1After = homePage.GetHoverText(1);
-            this.LogTest.Info("Text after: '{0}'", text1After);
-
-            var text2Before = homePage.GetHoverText(2);
-            this.LogTest.Info("Text before: '{0}'", text2Before);
-            homePage.MouseHoverAt(2);
-            var text2After = homePage.GetHoverText(2);
-            this.LogTest.Info("Text after: '{0}'", text2After);
-
-            var text3Before = homePage.GetHoverText(3);
-            this.LogTest.Info("Text before: '{0}'", text3Before);
-            homePage.MouseHoverAt(3);
-            var text3After = homePage.GetHoverText(3);
-            this.LogTest.Info("Text after: '{0}'", text3After);
-
-            Assert.AreEqual(string.Empty, text1Before);
-            Assert.AreEqual(string.Empty, text2Before);
-            Assert.AreEqual(string.Empty, text3Before);
-
-            Assert.AreEqual(expected[0], text1After);
-            Assert.AreEqual(expected[1], text2After);
-            Assert.AreEqual(expected[2], text3After);
-        }
-
-        [Test]
-        public void SetAttributeTest()
-        {
-            var internetPage = new InternetPage(this.DriverContext)
-                .OpenHomePage();
-
-            internetPage.ChangeBasicAuthLink("/broken_images");
-            internetPage.BasicAuthLinkClick();
-
-            var brokenImagesPage = new BrokenImagesPage(this.DriverContext);
-
-            Assert.True(brokenImagesPage.IsPageHeaderElementEqualsToExpected("Broken Images"), "Page header element is not equal to expected 'Broken Images'");
-        }
-
-        [Test]
-        public void SlowResourcesTest()
-        {
-            int timeout = 35;
-            new InternetPage(this.DriverContext)
-                .OpenHomePage()
-                .GoToSlowResources()
-                .WaitForIt(timeout);
         }
     }
 }

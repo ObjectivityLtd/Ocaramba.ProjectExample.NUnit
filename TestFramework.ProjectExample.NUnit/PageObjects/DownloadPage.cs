@@ -28,7 +28,6 @@ using Objectivity.Test.Automation.Common;
 using Objectivity.Test.Automation.Common.Extensions;
 using Objectivity.Test.Automation.Common.Helpers;
 using Objectivity.Test.Automation.Common.Types;
-using Objectivity.Test.Automation.Tests.PageObjects;
 
 namespace TestFramework.ProjectExample.NUnit.PageObjects
 {
@@ -49,7 +48,7 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             this.Driver.IsElementPresent(this.downloadPageHeader, BaseConfiguration.ShortTimeout);
         }
 
-        public DownloadPage SaveFile(string fileName, string newName)
+        public void SaveFile(string fileName, string newName)
         {
             if (BaseConfiguration.TestBrowser == BrowserType.Firefox
                 || BaseConfiguration.TestBrowser == BrowserType.Chrome
@@ -63,11 +62,9 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             {
                Logger.Info(CultureInfo.CurrentCulture, "Downloading files in browser {0} is not supported", BaseConfiguration.TestBrowser);
             }
-
-            return this;
         }
 
-        public DownloadPage SaveFile(string newName)
+        public void SaveFile(string newName)
         {
            if (BaseConfiguration.TestBrowser == BrowserType.Firefox
                 || BaseConfiguration.TestBrowser == BrowserType.Chrome
@@ -83,11 +80,9 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             {
                 Logger.Info(CultureInfo.CurrentCulture, "Downloading files in browser {0} is not supported", BaseConfiguration.TestBrowser);
             }
-
-            return this;
         }
 
-        public DownloadPage SaveAnyFile()
+        public void SaveAnyFile()
         {
             if (BaseConfiguration.TestBrowser == BrowserType.Firefox
                 || BaseConfiguration.TestBrowser == BrowserType.Chrome
@@ -103,8 +98,6 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             {
                 Logger.Info(CultureInfo.CurrentCulture, "Downloading files in browser {0} is not supported", BaseConfiguration.TestBrowser);
             }
-
-            return this;
         }
 
         public string CheckIfScreenShotIsSaved(int screenShotNumber)

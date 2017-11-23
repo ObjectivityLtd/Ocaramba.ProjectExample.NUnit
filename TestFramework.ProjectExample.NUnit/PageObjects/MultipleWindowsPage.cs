@@ -24,25 +24,23 @@ using System;
 using Objectivity.Test.Automation.Common;
 using Objectivity.Test.Automation.Common.Extensions;
 using Objectivity.Test.Automation.Common.Types;
-using Objectivity.Test.Automation.Tests.PageObjects;
 
 namespace TestFramework.ProjectExample.NUnit.PageObjects
 {
     public class MultipleWindowsPage : ProjectPageBase
     {
         private readonly ElementLocator
-    clickHerePageLocator = new ElementLocator(Locator.CssSelector, "a[href='/windows/new']");
+        clickHerePageLocator = new ElementLocator(Locator.CssSelector, "a[href='/windows/new']");
 
         public MultipleWindowsPage(DriverContext driverContext)
             : base(driverContext)
         {
         }
 
-        public NewWindowPage OpenNewWindowPage()
+        public void OpenNewWindowPage()
         {
             this.Driver.GetElement(this.clickHerePageLocator).Click();
             this.Driver.SwitchToWindowUsingUrl(new Uri("http://the-internet.herokuapp.com/windows/new"), 5);
-            return new NewWindowPage(this.DriverContext);
         }
     }
 }

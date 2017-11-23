@@ -26,7 +26,6 @@ using NLog;
 using Objectivity.Test.Automation.Common;
 using Objectivity.Test.Automation.Common.Extensions;
 using Objectivity.Test.Automation.Common.Types;
-using Objectivity.Test.Automation.Tests.PageObjects;
 
 namespace TestFramework.ProjectExample.NUnit.PageObjects
 {
@@ -49,25 +48,11 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
         /// <summary>
         /// Methods for this HomePage
         /// </summary>
-        /// <returns>Returns HomePage</returns>
-        public InternetPage OpenHomePage()
+        public void OpenHomePage()
         {
             var url = BaseConfiguration.GetUrlValue;
             this.Driver.NavigateTo(new Uri(url));
             Logger.Info(CultureInfo.CurrentCulture, "Opening page {0}", url);
-            return this;
-        }
-
-        /// <summary>
-        /// Methods for this HomePage
-        /// </summary>
-        /// <returns>Returns Homepage</returns>
-        public InternetPage OpenHomePageAndMeasureTime()
-        {
-            var url = BaseConfiguration.GetUrlValue;
-            this.Driver.NavigateToAndMeasureTime(new Uri(url), waitForAjax: true);
-            Logger.Info(CultureInfo.CurrentCulture, "Opening page {0}", url);
-            return this;
         }
 
         public InternetPage OpenHomePageWithUserCredentials()
@@ -78,31 +63,11 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             return this;
         }
 
-        public SlowResourcesPage GoToSlowResources()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("slow")).Click();
-            return new SlowResourcesPage(this.DriverContext);
-        }
-
-        public JavaScriptAlertsPage GoToJavaScriptAlerts()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("javascript_alerts")).Click();
-            return new JavaScriptAlertsPage(this.DriverContext);
-        }
-
-        public DownloadPage GoToFileDownloader()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("download")).Click();
-            return new DownloadPage(this.DriverContext);
-        }
-
-        public UploadPage GoToFileUploader()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("upload")).Click();
-            return new UploadPage(this.DriverContext);
-        }
-
-        public MultipleWindowsPage GoToMultipleWindowsPage()
+		  public DownloadPage GoToFileDownloader()
+		        {
+		            this.Driver.GetElement(this.linkLocator.Format("download")).Click();
+		            return new DownloadPage(this.DriverContext);
+		        }        public MultipleWindowsPage GoToMultipleWindowsPage()
         {
             this.Driver.GetElement(this.linkLocator.Format("windows")).Click();
             return new MultipleWindowsPage(this.DriverContext);
@@ -114,58 +79,16 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
             return new BasicAuthPage(this.DriverContext);
         }
 
-        public NestedFramesPage GoToNestedFramesPage()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("nested_frames")).Click();
-            return new NestedFramesPage(this.DriverContext);
-        }
-
-        public ContextMenuPage GoToContextMenuPage()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("context_menu")).Click();
-            return new ContextMenuPage(this.DriverContext);
-        }
-
         public FormAuthenticationPage GoToFormAuthenticationPage()
         {
             this.Driver.GetElement(this.linkLocator.Format("login")).Click();
             return new FormAuthenticationPage(this.DriverContext);
         }
 
-        public SecureFileDownloadPage GoToSecureFileDownloadPage()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("download_secure")).Click();
-            return new SecureFileDownloadPage(this.DriverContext);
-        }
-
         public ShiftingContentPage GoToShiftingContentPage()
         {
             this.Driver.GetElement(this.linkLocator.Format("shifting_content")).Click();
             return new ShiftingContentPage(this.DriverContext);
-        }
-
-        public HoversPage GoToHoversPage()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("hovers")).Click();
-            return new HoversPage(this.DriverContext);
-        }
-
-        public ForgotPasswordPage GoToForgotPasswordPage()
-        {
-            this.Driver.GetElement(this.linkLocator.Format("forgot_password")).Click();
-            return new ForgotPasswordPage(this.DriverContext);
-        }
-
-        public void ChangeBasicAuthLink(string newAttributeValue)
-        {
-            var element = this.Driver.GetElement(this.basicAuthLink);
-            element.SetAttribute("href", newAttributeValue);
-        }
-
-        public void BasicAuthLinkClick()
-        {
-            var element = this.Driver.GetElement(this.basicAuthLink);
-            element.Click();
         }
     }
 }

@@ -20,13 +20,13 @@
 //     SOFTWARE.
 // </license>
 
-namespace Objectivity.Test.Automation.Tests.NUnit
-{
-    using Common;
-    using Common.Logger;
-    using global::NUnit.Framework;
-    using global::NUnit.Framework.Interfaces;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using Objectivity.Test.Automation.Common;
+using Objectivity.Test.Automation.Common.Logger;
 
+namespace TestFramework.ProjectExample.NUnit
+{
     /// <summary>
     /// The base class for all tests <see href="https://github.com/ObjectivityLtd/Test.Automation/wiki/ProjectTestBase-class">More details on wiki</see>
     /// </summary>
@@ -68,7 +68,6 @@ namespace Objectivity.Test.Automation.Tests.NUnit
         public void BeforeClass()
         {
             this.DriverContext.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
-            StartPerformanceMeasure();
             this.DriverContext.Start();
         }
 
@@ -78,7 +77,6 @@ namespace Objectivity.Test.Automation.Tests.NUnit
         [OneTimeTearDown]
         public void AfterClass()
         {
-            StopPerfromanceMeasure();
             this.DriverContext.Stop();
         }
 
