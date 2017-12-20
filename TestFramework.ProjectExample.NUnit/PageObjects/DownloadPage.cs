@@ -102,7 +102,7 @@ namespace TestFramework.ProjectExample.NUnit.PageObjects
 
         public string CheckIfScreenShotIsSaved(int screenShotNumber)
         {
-            FilesHelper.WaitForFileOfGivenType(FileType.Png, 5, screenShotNumber, this.DriverContext.ScreenShotFolder);
+            FilesHelper.WaitForFileOfGivenType(FileType.Png, 5, screenShotNumber, this.DriverContext.ScreenShotFolder, true);
             var nameOfFile = FilesHelper.GetLastFile(this.DriverContext.ScreenShotFolder, FileType.Png);
 
             return nameOfFile.Name;
