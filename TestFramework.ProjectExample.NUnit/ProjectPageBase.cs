@@ -20,11 +20,12 @@
 //     SOFTWARE.
 // </license>
 
-using Objectivity.Test.Automation.Common;
-using OpenQA.Selenium;
-
-namespace TestFramework.ProjectExample.NUnit
+namespace Objectivity.Test.Automation.Tests.PageObjects
 {
+    using Objectivity.Test.Automation.Common;
+
+    using OpenQA.Selenium;
+
     public partial class ProjectPageBase
     {
         public ProjectPageBase(DriverContext driverContext)

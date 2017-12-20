@@ -20,13 +20,13 @@
 //     SOFTWARE.
 // </license>
 
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using Objectivity.Test.Automation.Common;
-using Objectivity.Test.Automation.Common.Logger;
-
-namespace TestFramework.ProjectExample.NUnit
+namespace Objectivity.Test.Automation.Tests.NUnit
 {
+    using Common;
+    using Common.Logger;
+    using global::NUnit.Framework;
+    using global::NUnit.Framework.Interfaces;
+
     /// <summary>
     /// The base class for all tests <see href="https://github.com/ObjectivityLtd/Test.Automation/wiki/ProjectTestBase-class">More details on wiki</see>
     /// </summary>
