@@ -22,10 +22,12 @@
 
 namespace Objectivity.Test.Automation.Tests.NUnit
 {
+    using System.Linq;
     using Common;
     using Common.Logger;
     using global::NUnit.Framework;
     using global::NUnit.Framework.Interfaces;
+    using Objectivity.Test.Automation.Common.Helpers;
 
     /// <summary>
     /// The base class for all tests <see href="https://github.com/ObjectivityLtd/Test.Automation/wiki/ProjectTestBase-class">More details on wiki</see>
@@ -77,6 +79,10 @@ namespace Objectivity.Test.Automation.Tests.NUnit
         [OneTimeTearDown]
         public void AfterClass()
         {
+            PrintPerformanceResultsHelper.PrintAverageDurationMillisecondsInAppVeyor(this.DriverContext.PerformanceMeasures);
+            PrintPerformanceResultsHelper.PrintPercentiles90DurationMillisecondsInAppVeyor(this.DriverContext.PerformanceMeasures);
+            PrintPerformanceResultsHelper.PrintAverageDurationMillisecondsInTeamcity(this.DriverContext.PerformanceMeasures);
+            PrintPerformanceResultsHelper.PrintPercentiles90DurationMillisecondsinTeamcity(this.DriverContext.PerformanceMeasures);
             this.DriverContext.Stop();
         }
 
@@ -100,9 +106,15 @@ namespace Objectivity.Test.Automation.Tests.NUnit
             var filePaths = this.SaveTestDetailsIfTestFailed(this.driverContext);
             this.SaveAttachmentsToTestContext(filePaths);
             this.LogTest.LogTestEnding(this.driverContext);
+            var javaScriptErrors = this.DriverContext.LogJavaScriptErrors();
             if (this.IsVerifyFailedAndClearMessages(this.driverContext) && TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed)
             {
                 Assert.Fail();
+            }
+
+            if (javaScriptErrors)
+            {
+                Assert.Fail("JavaScript errors found. See the logs for details");
             }
         }
 
