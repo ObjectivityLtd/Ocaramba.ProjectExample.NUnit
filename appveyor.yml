@@ -8,6 +8,7 @@ assembly_info:
 before_build:
 - cmd: nuget restore
 build:
+  project: TestFramework.ProjectExample.NUnit.sln
   verbosity: minimal
 after_test:
 - ps: >-
