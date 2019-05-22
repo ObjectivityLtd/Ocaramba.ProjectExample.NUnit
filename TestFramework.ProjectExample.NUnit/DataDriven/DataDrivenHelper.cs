@@ -20,7 +20,7 @@
 //     SOFTWARE.
 // </license>
 
-namespace Objectivity.Test.Automation.Tests.NUnit.DataDriven
+namespace Ocaramba.Tests.NUnit.DataDriven
 {
     using System;
     using System.Collections.Generic;
@@ -30,14 +30,14 @@ namespace Objectivity.Test.Automation.Tests.NUnit.DataDriven
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
-    using Common.Exceptions;
     using global::NUnit.Framework;
     using NLog;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
+    using Ocaramba.Exceptions;
 
     /// <summary>
-    /// XML DataDriven methods for NUnit test framework <see href="https://github.com/ObjectivityLtd/Test.Automation/wiki/DataDriven-tests-from-Xml-files">More details on wiki</see>
+    /// XML DataDriven methods for NUnit test framework <see href="https://github.com/ObjectivityLtd/Ocaramba/wiki/DataDriven-tests-from-Xml-files">More details on wiki</see>
     /// </summary>
     public static class DataDrivenHelper
     {
@@ -131,6 +131,7 @@ namespace Objectivity.Test.Automation.Tests.NUnit.DataDriven
 
                 while (line != null)
                 {
+                    string testCaseName;
                     line = sr.ReadLine();
                     if (line != null)
                     {
@@ -145,32 +146,25 @@ namespace Objectivity.Test.Automation.Tests.NUnit.DataDriven
                             testParams.Add(columns[i], split[i]);
                         }
 
-                        if (diffParam != null && diffParam.Any())
+                        try
                         {
-                            try
-                            {
-                                testName = TestCaseName(diffParam, testParams, testName);
-                            }
-                            catch (DataDrivenReadException e)
-                            {
-                                throw new DataDrivenReadException(
-                                    string.Format(
-                                        " Exception while reading Csv Data Driven file\n searched key '{0}' not found \n for test {1} in file '{2}' at row {3}",
+                            testCaseName = TestCaseName(diffParam, testParams, testName);
+                        }
+                        catch (DataDrivenReadException e)
+                        {
+                            throw new DataDrivenReadException(
+                            string.Format(
+                                       " Exception while reading Csv Data Driven file\n searched key '{0}' not found \n for test {1} in file '{2}' at row {3}",
                                         e.Message,
                                         testName,
                                         file,
                                         row));
-                            }
-                        }
-                        else
-                        {
-                            testName = testName + "_row(" + row + ")";
                         }
 
                         row = row + 1;
 
                         var data = new TestCaseData(testParams);
-                        data.SetName(testName);
+                        data.SetName(testCaseName);
                         yield return data;
                     }
                 }

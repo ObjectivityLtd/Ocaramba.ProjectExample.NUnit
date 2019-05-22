@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFramework.ProjectExample.NUnit", "TestFramework.ProjectExample.NUnit\TestFramework.ProjectExample.NUnit.csproj", "{706C1124-72FD-42DD-BB05-69C6C15FBC33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocaramba.Template.NUnit", "TestFramework.ProjectExample.NUnit\Ocaramba.Template.NUnit.csproj", "{706C1124-72FD-42DD-BB05-69C6C15FBC33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5708ADF-A27B-4496-B0AA-908FC7203A29}
 	EndGlobalSection
 EndGlobal
